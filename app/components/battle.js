@@ -1,25 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-
-function PlayerPreview(props) {
-  return (
-    <div>
-      <div className='column'>
-        <img
-          className='avatar'
-          src={props.avatar}
-          alt={'Avatar for ' + props.username}
-        />
-        <h2 className='username'>@{props.username}</h2>
-      </div>
-      <button
-        className='reset'
-        onClick={() => props.onReset(props.id)}>
-          Reset
-      </button>
-    </div>
-  );
-}
+import PlayerPreview from './playerPreview';
 
 class PlayerInput extends Component {
   constructor(props) {
@@ -137,9 +118,16 @@ class Battle extends Component {
             <PlayerPreview
               avatar={playerOneImage}
               username={playerOneName}
-              onReset={(id) => this.handleReset(id)}
-              id='playerOne'
-            />}
+              // onReset={(id) => this.handleReset(id)}
+              // id='playerOne'
+              >
+              <button
+                className='reset'
+                // onClick={() => props.onReset(props.id)}
+                onClick={() => this.handleReset('playerOne')}>
+                  Reset
+              </button>
+            </PlayerPreview>}
 
           {/*  if condition before && is true, then return whatever is after &&  */}
           {!playerTwoName &&
@@ -154,9 +142,16 @@ class Battle extends Component {
               <PlayerPreview
                 avatar={playerTwoImage}
                 username={playerTwoName}
-                onReset={(id) => this.handleReset(id)}
-                id='playerTwo'
-              />}
+                // onReset={(id) => this.handleReset(id)}
+                // id='playerTwo'
+                >
+                <button
+                  className='reset'
+                  // onClick={() => props.onReset(props.id)}
+                  onClick={() => this.handleReset('playerTwo')}>
+                    Reset
+                </button>
+              </PlayerPreview>}
 
         </div>
 
@@ -165,7 +160,7 @@ class Battle extends Component {
             className='button'
             to={{
               pathname: match.url + '/results',
-              search: '?playerOneName=' + playerOneName + '?playerTwoName=' + playerTwoName
+              search: '?playerOneName=' + playerOneName + '&playerTwoName=' + playerTwoName
             }}>
             Battle
           </Link>}

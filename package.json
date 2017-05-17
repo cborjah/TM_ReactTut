@@ -24,6 +24,7 @@
   "homepage": "https://github.com/cborjah/TM_ReactTut#readme",
   "dependencies": {
     "axios": "^0.16.1",
+    "query-string": "^4.3.4",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-router-dom": "^4.1.1"
