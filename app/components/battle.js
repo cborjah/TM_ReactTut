@@ -1,4 +1,25 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+
+function PlayerPreview(props) {
+  return (
+    <div>
+      <div className='column'>
+        <img
+          className='avatar'
+          src={props.avatar}
+          alt={'Avatar for ' + props.username}
+        />
+        <h2 className='username'>@{props.username}</h2>
+      </div>
+      <button
+        className='reset'
+        onClick={() => props.onReset(props.id)}>
+          Reset
+      </button>
+    </div>
+  );
+}
 
 class PlayerInput extends Component {
   constructor(props) {
@@ -11,13 +32,12 @@ class PlayerInput extends Component {
 
   handleChange(event) {
     let value = event.target.value;
-    console.log('value: ' + value);
+    // console.log('value: ' + value);
     this.setState({ username: value });
   }
 
   handleSubmit(event) {
     event.preventDefault();
-
     this.props.onSubmit(this.props.id, this.state.username)
   }
 
@@ -77,13 +97,33 @@ class Battle extends Component {
     }
   }
 
+  handleReset(id) {
+    if(id === 'playerOne') {
+      this.setState({
+        playerOneName: '',
+        playerOneImage: null
+      });
+    }
+    if(id === 'playerTwo') {
+      this.setState({
+        playerTwoName: '',
+        playerTwoImage: null
+      });
+    }
+  }
+
   render() {
+    // the match prop is from react router which includes a url property
+    let match = this.props.match;
     let playerOneName = this.state.playerOneName;
     let playerTwoName = this.state.playerTwoName;
+    let playerOneImage = this.state.playerOneImage;
+    let playerTwoImage = this.state.playerTwoImage;
 
     return (
       <div>
         <div className='row'>
+
           {/*  if condition before && is true, then return whatever is after &&  */}
           {!playerOneName &&
             <PlayerInput
@@ -92,6 +132,15 @@ class Battle extends Component {
               // Pass onSubmit as an anonymous function in order to bind this to handleSubmit
               onSubmit={(id, username) => this.handleSubmit(id, username)}
             />}
+
+          {playerOneImage !== null &&
+            <PlayerPreview
+              avatar={playerOneImage}
+              username={playerOneName}
+              onReset={(id) => this.handleReset(id)}
+              id='playerOne'
+            />}
+
           {/*  if condition before && is true, then return whatever is after &&  */}
           {!playerTwoName &&
             <PlayerInput
@@ -100,7 +149,27 @@ class Battle extends Component {
               // Pass onSubmit as an anonymous function in order to bind this to handleSubmit
               onSubmit={(id, username) => this.handleSubmit(id, username)}
             />}
+
+            {playerTwoImage !== null &&
+              <PlayerPreview
+                avatar={playerTwoImage}
+                username={playerTwoName}
+                onReset={(id) => this.handleReset(id)}
+                id='playerTwo'
+              />}
+
         </div>
+
+        {playerOneImage && playerTwoImage &&
+          <Link
+            className='button'
+            to={{
+              pathname: match.url + '/results',
+              search: '?playerOneName=' + playerOneName + '?playerTwoName=' + playerTwoName
+            }}>
+            Battle
+          </Link>}
+
       </div>
     );
   }

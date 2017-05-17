@@ -4,6 +4,7 @@ import ReactRouter, { BrowserRouter as Router, Route, Switch } from 'react-route
 import NavBar from './nav';
 import Home from './home';
 import Battle from './battle';
+import Results from './results';
 
 class App extends Component {
   render() {
@@ -14,6 +15,7 @@ class App extends Component {
           <Switch>
             <Route exact path='/' component={Home} />
             <Route exact path='/battle' component={Battle} />
+            <Route path='/battle/results' component={Results} />
             <Route path='/popular' component={Popular} />
             {/* With Switch, this last route will always fire if none of the previous routes are hit. */}
             <Route render={() => <p>Page Not Found</p>}/>
