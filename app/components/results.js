@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { battle } from '../utils/api';
 import { Link } from 'react-router-dom';
 import PlayerPreview from './playerPreview';
+import Loading from './loading';
 
 const queryString = require('query-string');
 
@@ -78,7 +79,7 @@ class Results extends Component {
 
     if(loading === true) {
       return (
-        <p>Loading...</p>
+        <Loading />
       );
     }
 

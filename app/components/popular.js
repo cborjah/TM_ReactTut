@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { fetchPopularRepos } from '../utils/api';
+import Loading from './loading';
 
 // If component only has a render method, is stateless, takes in props, and just renders UI,
 // use a stateless functional component
@@ -76,7 +77,7 @@ class Popular extends Component {
           selectedLanguage={this.state.selectedLanguage}
           onSelect={(lang) => this.updateLanguage(lang)}
         />
-        {!this.state.repos ? <p>Loading...</p> : <RepoGrid repos={this.state.repos}/>}
+        {!this.state.repos ? <Loading /> : <RepoGrid repos={this.state.repos}/>}
       </div>
     );
   }
